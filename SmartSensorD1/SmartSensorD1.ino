@@ -22,7 +22,7 @@ void setup()
   Serial.println();
   Serial.println("Smart Sensor V1 Booting");
 
-  wifi_setup();
+  wifi_setup(false);
 
   ota_setup();
 

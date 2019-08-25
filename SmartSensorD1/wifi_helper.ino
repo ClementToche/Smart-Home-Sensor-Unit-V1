@@ -2,13 +2,16 @@ const char ssid[] = "WiFi SSID";
 const char pass[] = "WiFi Password";
 char str_mac[18] = {0};
 
-void wifi_setup()
+void wifi_setup(bool list_network)
 {
   Serial.println("Initializing Wifi...");
   printMacAddress();
 
-  //Serial.println("Scanning available networks...");
-  //listNetworks();
+  if ( list_network )
+  {
+      Serial.println("Scanning available networks...");
+      listNetworks();
+  }
     
   Serial.println();
   Serial.print("Connecting to ");
