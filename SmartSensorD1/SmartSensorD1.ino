@@ -1,14 +1,11 @@
-#include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
-#include <WiFiUdp.h>
-#include <ArduinoOTA.h>
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
+#include <ESP8266WiFi.h>
+#include <ArduinoOTA.h>
+#include <WiFiUdp.h>
+#include <FS.h>
 
-WiFiClientSecure espClient;
-PubSubClient mqtt_client(espClient);
-
-volatile bool readPir1 = false;
+#include "const.h"
 
 void setup()
 {
@@ -17,18 +14,50 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);
 
   Serial.begin(115200);
-  while (!Serial) ;
+  while (!Serial)
+    ;
 
-  Serial.println();
-  Serial.println("Smart Sensor V1 Booting");
+  //  _________                      .__  __  .__       .__
+  //  \_   ___ \  ____   ____   ____ |__|/  |_|__| ____ |__|____    ____
+  //  /    \  \/ /  _ \ / ___\ /    \|  \   __\  |/ ___\|  \__  \  /    \ 
+  //  \     \___(  <_> ) /_/  >   |  \  ||  | |  \  \___|  |/ __ \|   |  \
+  //   \______  /\____/\___  /|___|  /__||__| |__|\___  >__(____  /___|  /
+  //          \/      /_____/      \/                 \/        \/     \/
 
-  wifi_setup(false);
+  Serial.println(F("********************************************************************"));
+  Serial.println(F("_________                      .__  __  .__       .__               "));
+  Serial.println(F("\\_   ___ \\  ____   ____   ____ |__|/  |_|__| ____ |__|____    ____  "));
+  Serial.println(F("/    \\  \\/ /  _ \\ / ___\\ /    \\|  \\   __\\  |/ ___\\|  \\__  \\  /    \\ "));
+  Serial.println(F("\\     \\___(  <_> ) /_/  >   |  \\  ||  | |  \\  \\___|  |/ __ \\|   |  \\"));
+  Serial.println(F(" \\______  /\\____/\\___  /|___|  /__||__| |__|\\___  >__(____  /___|  /"));
+  Serial.println(F("        \\/      /_____/      \\/                 \\/        \\/     \\/ "));
+  Serial.println(F("********************************************************************"));
+  Serial.println(F(__FILE__));
+  Serial.println(F(__DATE__ " " __TIME__));
+  Serial.print(F("Version "));
+  Serial.println(version);
+  Serial.println(F("********************************************************************"));
 
-  ota_setup();
+  spiffs_setup();
 
-  mqtt_setup();
+  spiffs_list_files();
 
-  Serial.println("Launched");
+  wifi_setup(false,
+             spiffs_get_wifi_ssid(),
+             spiffs_get_wifi_pwd(),
+             spiffs_get_board_name());
+
+  ota_setup(spiffs_get_board_name(),
+            spiffs_get_ota_pwd());
+
+  mqtt_setup(spiffs_get_mqtt_user(),
+             spiffs_get_mqtt_pwd(),
+             spiffs_get_mqtt_server(),
+             spiffs_get_mqtt_port(),
+             spiffs_get_board_name());
+
+  Serial.println(F("********** Started **********"));
+
   pin_led(false);
 }
 
@@ -36,43 +65,20 @@ void loop()
 {
   wifi_check();
 
-  if (!mqtt_client.connected())
-  {
-    // Stop interrupt events
-    readPir1 = true;
-
-    pin_led(true);
-    mqtt_connect();
-    pin_led(false);
-
-    readPir1 = false;
-  }
-
-  if ( digitalRead(14) == 1 )
+  if (pir_pin_state())
   {
     pin_led(true);
 
-    if ( pir_pin_state() )
-    {
-      Serial.println("Detect");
-      mqtt_send_detect_status(1);
-    }
+    Serial.println("Detect");
+    mqtt_send_detect_status();
 
     // Avoid taking too much interrupt
     delay(10000);
-    readPir1 = false;
 
     pin_led(false);
   }
 
-  mqtt_client.loop();
-  ArduinoOTA.handle();
-}
+  mqtt_loop();
 
-void pirDetect1()
-{
-  if ( !readPir1 )
-  {
-    readPir1 = true;
-  }
+  ArduinoOTA.handle();
 }

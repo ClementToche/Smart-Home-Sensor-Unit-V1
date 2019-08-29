@@ -1,17 +1,9 @@
-const int otaPort = 8266;
 
-void ota_setup()
+void ota_setup(char* name, char* pwd)
 {
   ArduinoOTA.setPort(otaPort);
-  // Hostname defaults to esp8266-[ChipID]
-  ArduinoOTA.setHostname(getStrMac());
-
-  // No authentication by default
-  ArduinoOTA.setPassword("OTA Password");
-
-  // Password can be set with it's md5 value as well
-  // MD5(admin) = 21232f297a57a5a743894a0e4a801fc3
-  // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");
+  ArduinoOTA.setHostname(name);
+  ArduinoOTA.setPassword(pwd);
 
   ArduinoOTA.onStart([]() {
     String type;
@@ -21,7 +13,6 @@ void ota_setup()
       type = "filesystem";
     }
 
-    // NOTE: if updating FS this would be the place to unmount FS using FS.end()
     Serial.println("Start updating " + type);
   });
   
@@ -49,4 +40,7 @@ void ota_setup()
   });
 
   ArduinoOTA.begin();
+
+  free(name);
+  free(pwd);
 }
