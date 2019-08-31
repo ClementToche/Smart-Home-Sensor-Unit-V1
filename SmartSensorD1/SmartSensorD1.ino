@@ -1,3 +1,4 @@
+
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
@@ -24,6 +25,7 @@ void setup()
   //   \______  /\____/\___  /|___|  /__||__| |__|\___  >__(____  /___|  /
   //          \/      /_____/      \/                 \/        \/     \/
 
+  Serial.println();
   Serial.println(F("********************************************************************"));
   Serial.println(F("_________                      .__  __  .__       .__               "));
   Serial.println(F("\\_   ___ \\  ____   ____   ____ |__|/  |_|__| ____ |__|____    ____  "));
@@ -32,7 +34,7 @@ void setup()
   Serial.println(F(" \\______  /\\____/\\___  /|___|  /__||__| |__|\\___  >__(____  /___|  /"));
   Serial.println(F("        \\/      /_____/      \\/                 \\/        \\/     \\/ "));
   Serial.println(F("********************************************************************"));
-  Serial.println(F(__FILE__));
+  Serial.println(__FILENAME__);
   Serial.println(F(__DATE__ " " __TIME__));
   Serial.print(F("Version "));
   Serial.println(version);

@@ -1,3 +1,5 @@
+#define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+
 const char version[] = "1.1.1";
 
 const int otaPort = 8266;
