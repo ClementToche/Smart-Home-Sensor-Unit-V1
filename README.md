@@ -9,7 +9,7 @@
 
 - [Repository Status](#Repository Status)
 - [General architecture](#General architecture)
-- [Parameters](#Parameters)
+- [Parameters](#parameters)
 - [Environment set-up](#Environment set-up)
 
 ## Repository Status
