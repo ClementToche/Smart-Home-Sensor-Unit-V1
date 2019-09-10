@@ -12,17 +12,25 @@
 - [Parameters](#parameters)
 - [Environment set-up](#Environment set-up)
 
+---
+
 ## Repository Status
 - Current SW Version : 
 - Current HW Version : 
 - Build status : 
 - License : 
 
+---
+
 ## General architecture :
 > Need graphics
 
+---
+
 ## Parameters :
 > Explain how set SSID, name, passwords, ...
+
+---
 
 ## Environment set-up :
 > Explain how to set-up environment.
