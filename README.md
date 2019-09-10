@@ -26,7 +26,9 @@
 > Need graphics
 
 ---
-<a name="parameters"/>  
+
+<a name="parameters"/>
+
 ## Parameters :
 > Explain how set SSID, name, passwords, ...
 
