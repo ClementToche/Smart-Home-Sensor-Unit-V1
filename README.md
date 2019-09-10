@@ -17,10 +17,10 @@
 <a name="repo_status"/>
 
 ## Repository Status
-- Current SW Version : 
-- Current HW Version : 
-- Build status : 
-- License : 
+
+| SW Version | HW Version | Build Status | License |
+| :---: | :---: | :---: | :---: |
+| Tag 1 |  Tag 2 | Tag 3 | Tag 4 |
 
 ---
 
