@@ -7,12 +7,14 @@
 
 ## Table of Contents
 
-- [Repository Status](#Repository Status)
-- [General architecture](#General architecture)
+- [Repository Status](#repo_status)
+- [General architecture](#general_archi)
 - [Parameters](#parameters)
-- [Environment set-up](#Environment set-up)
+- [Environment set-up](#env_setup)
 
 ---
+
+<a name="repo_status"/>
 
 ## Repository Status
 - Current SW Version : 
@@ -21,6 +23,8 @@
 - License : 
 
 ---
+
+<a name="general_archi"/>
 
 ## General architecture :
 > Need graphics
@@ -33,6 +37,8 @@
 > Explain how set SSID, name, passwords, ...
 
 ---
+
+<a name="env_setup"/>
 
 ## Environment set-up :
 > Explain how to set-up environment.
